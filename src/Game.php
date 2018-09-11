@@ -14,18 +14,26 @@ class Game {
      * @var CategoryCollection
      */
     private $categories;
+    private $options;
+
+    const DEFAULT_CONFIG = [
+        'CAN_LEAVE_PENALTY_BOX' => false
+    ];
 
     /**
      * Game constructor.
      * @param $categories CategoryCollection
+     * @param array $options
      */
-    function  __construct($categories){
+    function  __construct($categories, $options = [])
+    {
         $this->players = array();
         $this->places = array(0);
         $this->purses  = array(0);
         $this->inPenaltyBox  = array(0);
 
         $this->categories = $categories;
+        $this->options = array_merge(self::DEFAULT_CONFIG, $options);
     }
 
 
@@ -100,6 +108,10 @@ class Game {
     function wasCorrectlyAnswered() {
         if ($this->inPenaltyBox[$this->currentPlayer]){
             if ($this->isGettingOutOfPenaltyBox) {
+                if ($this->options['CAN_LEAVE_PENALTY_BOX']) {
+                    $this->inPenaltyBox[$this->currentPlayer] = false;
+                }
+
                 $this->echoln("Answer was correct!!!!");
                 $this->purses[$this->currentPlayer] += $this->currentCategory()->getScore();
                 $this->echoln($this->players[$this->currentPlayer]

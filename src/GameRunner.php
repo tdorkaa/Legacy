@@ -9,9 +9,9 @@ class GameRunner {
      */
     private $game;
 
-    public function __construct($players, CategoryCollection $categories)
+    public function __construct($players, CategoryCollection $categories, array $options = [])
     {
-        $this->game = new Game($categories);
+        $this->game = new Game($categories, $options);
 
         foreach ($players as $player) {
             $this->game->add($player);
