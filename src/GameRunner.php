@@ -9,7 +9,7 @@ class GameRunner {
      */
     private $game;
 
-    public function __construct($players, $categories)
+    public function __construct($players, CategoryCollection $categories)
     {
         $this->game = new Game($categories);
 

@@ -11,13 +11,13 @@ class Game {
     var $currentPlayer = 0;
     var $isGettingOutOfPenaltyBox;
     /**
-     * @var Category[]
+     * @var CategoryCollection
      */
     private $categories;
 
     /**
      * Game constructor.
-     * @param $categories Category[]
+     * @param $categories CategoryCollection
      */
     function  __construct($categories){
         $this->players = array();
@@ -94,15 +94,7 @@ class Game {
 
 
     function currentCategory() {
-        $playerPlace = $this->places[$this->currentPlayer];
-
-        foreach ($this->categories as $category) {
-            if (in_array($playerPlace, $category->getLocations())) {
-                return $category;
-            }
-        }
-
-        return null;
+        return $this->categories->getByLocation($this->places[$this->currentPlayer]);
     }
 
     function wasCorrectlyAnswered() {
