@@ -30,4 +30,15 @@ class CategoryTest extends TestCase
         $this->assertEquals('Pop Question 0', $nextQuestion);
     }
 
+    /**
+     * @test
+     */
+    public function getNextQuestion_firstQuestionAlreadyAsked_returnsNextQuestion()
+    {
+        $category = new Category('Pop', 1, [1, 2, 3]);
+        $category->getNextQuestion();
+        $nextQuestion = $category->getNextQuestion();
+        $this->assertEquals('Pop Question 1', $nextQuestion);
+    }
+
 }

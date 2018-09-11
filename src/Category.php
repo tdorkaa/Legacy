@@ -8,6 +8,7 @@ class Category
     private $name;
     private $score;
     private $locations;
+    private $questionNumber = 0;
 
     public function __construct($name, $score, $locations)
     {
@@ -42,7 +43,9 @@ class Category
 
     public function getNextQuestion()
     {
-        return "$this->name Question 0";
+        $nextQuestion = "$this->name Question $this->questionNumber";
+        $this->questionNumber++;
+        return $nextQuestion;
     }
 
 }
