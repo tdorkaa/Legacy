@@ -16,4 +16,22 @@ class PlayerTest extends TestCase
         $this->assertEquals('name', $player->getName());
     }
 
+    /**
+     * @test
+     */
+    public function setters_givenValues_gettersReturnThoseValues()
+    {
+        $player = new Player('name');
+
+        $player->setScore(10);
+        $player->setLocation(6);
+        $player->setPenalty(true);
+        $player->setCanComeOutOfPenalty(true);
+
+        $this->assertEquals(10, $player->getScore());
+        $this->assertEquals(6, $player->getLocation());
+        $this->assertEquals(true, $player->isInPenalty());
+        $this->assertEquals(true, $player->isGettingOutOfPenalty());
+    }
+
 }
