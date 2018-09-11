@@ -39,4 +39,10 @@ class Category
     {
         return $this->locations;
     }
+
+    public function getNextQuestion()
+    {
+        return "$this->name Question 0";
+    }
+
 }

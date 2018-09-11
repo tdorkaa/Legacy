@@ -20,4 +20,14 @@ class CategoryTest extends TestCase
         $this->assertEquals([1, 2, 3], $category->getLocations());
     }
 
+    /**
+     * @test
+     */
+    public function getNextQuestion_returnsNextQuestion()
+    {
+        $category = new Category('Pop', 1, [1, 2, 3]);
+        $nextQuestion = $category->getNextQuestion();
+        $this->assertEquals('Pop Question 0', $nextQuestion);
+    }
+
 }
