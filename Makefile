@@ -1,1 +1,2 @@
-test: vendor/phpunit/phpunit/phpunit ./Tests
+test:
+	vendor/bin/phpunit ./Tests
