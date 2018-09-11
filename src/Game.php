@@ -67,7 +67,7 @@ class Game {
                 $this->echoln($this->players[$this->currentPlayer]
                     . "'s new location is "
                     .$this->places[$this->currentPlayer]);
-                $this->echoln("The category is " . $this->currentCategory());
+                $this->echoln("The category is " . $this->currentCategory()->getName());
                 $this->askQuestion();
             } else {
                 $this->echoln($this->players[$this->currentPlayer] . " is not getting out of the penalty box");
@@ -82,16 +82,14 @@ class Game {
             $this->echoln($this->players[$this->currentPlayer]
                 . "'s new location is "
                 .$this->places[$this->currentPlayer]);
-            $this->echoln("The category is " . $this->currentCategory());
+            $this->echoln("The category is " . $this->currentCategory()->getName());
             $this->askQuestion();
         }
 
     }
 
     function  askQuestion() {
-        $question = $this->categories[$this->currentCategory()]->getNextQuestion();
-
-        $this->echoln($question);
+        $this->echoln($this->currentCategory()->getNextQuestion());
     }
 
 
@@ -100,7 +98,7 @@ class Game {
 
         foreach ($this->categories as $category) {
             if (in_array($playerPlace, $category->getLocations())) {
-                return $category->getName();
+                return $category;
             }
         }
 
@@ -111,7 +109,7 @@ class Game {
         if ($this->inPenaltyBox[$this->currentPlayer]){
             if ($this->isGettingOutOfPenaltyBox) {
                 $this->echoln("Answer was correct!!!!");
-                $this->purses[$this->currentPlayer] += $this->categories[$this->currentCategory()]->getScore();
+                $this->purses[$this->currentPlayer] += $this->currentCategory()->getScore();
                 $this->echoln($this->players[$this->currentPlayer]
                     . " now has "
                     .$this->purses[$this->currentPlayer]
@@ -133,7 +131,7 @@ class Game {
         } else {
 
             $this->echoln("Answer was corrent!!!!");
-            $this->purses[$this->currentPlayer] += $this->categories[$this->currentCategory()]->getScore();
+            $this->purses[$this->currentPlayer] += $this->currentCategory()->getScore();
             $this->echoln($this->players[$this->currentPlayer]
                 . " now has "
                 .$this->purses[$this->currentPlayer]

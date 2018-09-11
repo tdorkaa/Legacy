@@ -17,18 +17,6 @@ class Category
         $this->locations = $locations;
     }
 
-    public static function createBulk(array $array)
-    {
-        $categories = [];
-
-        foreach ($array as $parameters) {
-            $category =  new Category($parameters[0], $parameters[1], $parameters[2]);
-            $categories[$category->getName()] = $category;
-        }
-
-        return $categories;
-    }
-
     /**
      * @return mixed
      */
