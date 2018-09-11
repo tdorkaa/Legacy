@@ -14,7 +14,7 @@ class GameRunner {
         $this->game = new Game($categories, $options);
 
         foreach ($players as $player) {
-            $this->game->add($player);
+            $this->game->add(new Player($player));
         }
     }
 
