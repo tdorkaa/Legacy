@@ -51,8 +51,8 @@ class CategoryTest extends TestCase
             ['Science', 2, [4, 5, 6]],
         ]);
         $this->assertEquals([
-            new Category('Pop', 1, [1, 2, 3]),
-            new Category('Science', 2, [4, 5, 6]),
+            'Pop' => new Category('Pop', 1, [1, 2, 3]),
+            'Science' => new Category('Science', 2, [4, 5, 6]),
         ], $categories);
     }
 

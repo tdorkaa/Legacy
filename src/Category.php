@@ -19,9 +19,14 @@ class Category
 
     public static function createBulk(array $array)
     {
-        return array_map(function ($item) {
-            return new Category($item[0], $item[1], $item[2]);
-        }, $array);
+        $categories = [];
+
+        foreach ($array as $parameters) {
+            $category =  new Category($parameters[0], $parameters[1], $parameters[2]);
+            $categories[$category->getName()] = $category;
+        }
+
+        return $categories;
     }
 
     /**
