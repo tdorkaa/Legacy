@@ -1,0 +1,1 @@
+test: vendor/phpunit/phpunit/phpunit ./Tests
