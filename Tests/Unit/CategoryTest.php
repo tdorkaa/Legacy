@@ -41,4 +41,19 @@ class CategoryTest extends TestCase
         $this->assertEquals('Pop Question 1', $nextQuestion);
     }
 
+    /**
+     * @test
+     */
+    public function staticCreateBulk_givenCategoryParams_returnsArrayOfCategories()
+    {
+        $categories = Category::createBulk([
+            ['Pop', 1, [1, 2, 3]],
+            ['Science', 2, [4, 5, 6]],
+        ]);
+        $this->assertEquals([
+            new Category('Pop', 1, [1, 2, 3]),
+            new Category('Science', 2, [4, 5, 6]),
+        ], $categories);
+    }
+
 }

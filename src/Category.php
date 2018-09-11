@@ -17,6 +17,13 @@ class Category
         $this->locations = $locations;
     }
 
+    public static function createBulk(array $array)
+    {
+        return array_map(function ($item) {
+            return new Category($item[0], $item[1], $item[2]);
+        }, $array);
+    }
+
     /**
      * @return mixed
      */

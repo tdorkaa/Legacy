@@ -1,5 +1,5 @@
 <?php
-
+namespace Game;
 include __DIR__ . '/Game.php';
 
 $notAWinner;
