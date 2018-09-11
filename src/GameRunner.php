@@ -1,10 +1,15 @@
 <?php
+
 namespace Game;
+
 include __DIR__ . '/Game.php';
 
-$notAWinner;
-
-$aGame = new Game();
+$aGame = new Game(Category::createBulk([
+    ['Pop', 1, [0,4,8]],
+    ['Science', 1, [1,5,9]],
+    ['Sports', 1, [2,6,10]],
+    ['Rock', 1, [3,7,11]]
+]));
 
 $aGame->add("Chet");
 $aGame->add("Pat");

@@ -8,41 +8,29 @@ class Game {
     var $purses ;
     var $inPenaltyBox ;
 
-    var $popQuestions;
-    var $scienceQuestions;
-    var $sportsQuestions;
-    var $rockQuestions;
-
     var $currentPlayer = 0;
     var $isGettingOutOfPenaltyBox;
+    /**
+     * @var Category[]
+     */
+    private $categories;
 
-    function  __construct(){
-
+    /**
+     * Game constructor.
+     * @param $categories Category[]
+     */
+    function  __construct($categories){
         $this->players = array();
         $this->places = array(0);
         $this->purses  = array(0);
         $this->inPenaltyBox  = array(0);
 
-        $this->popQuestions = array();
-        $this->scienceQuestions = array();
-        $this->sportsQuestions = array();
-        $this->rockQuestions = array();
-
-        for ($i = 0; $i < 50; $i++) {
-            array_push($this->popQuestions, "Pop Question " . $i);
-            array_push($this->scienceQuestions, ("Science Question " . $i));
-            array_push($this->sportsQuestions, ("Sports Question " . $i));
-            array_push($this->rockQuestions, $this->createRockQuestion($i));
-        }
+        $this->categories = $categories;
     }
 
 
     function echoln($string) {
         echo $string."\n";
-    }
-
-    function createRockQuestion($index){
-        return "Rock Question " . $index;
     }
 
     function isPlayable() {
@@ -101,35 +89,29 @@ class Game {
     }
 
     function  askQuestion() {
-        if ($this->currentCategory() == "Pop")
-            $this->echoln(array_shift($this->popQuestions));
-        if ($this->currentCategory() == "Science")
-            $this->echoln(array_shift($this->scienceQuestions));
-        if ($this->currentCategory() == "Sports")
-            $this->echoln(array_shift($this->sportsQuestions));
-        if ($this->currentCategory() == "Rock")
-            $this->echoln(array_shift($this->rockQuestions));
+        $question = $this->categories[$this->currentCategory()]->getNextQuestion();
+
+        $this->echoln($question);
     }
 
 
     function currentCategory() {
-        if ($this->places[$this->currentPlayer] == 0) return "Pop";
-        if ($this->places[$this->currentPlayer] == 4) return "Pop";
-        if ($this->places[$this->currentPlayer] == 8) return "Pop";
-        if ($this->places[$this->currentPlayer] == 1) return "Science";
-        if ($this->places[$this->currentPlayer] == 5) return "Science";
-        if ($this->places[$this->currentPlayer] == 9) return "Science";
-        if ($this->places[$this->currentPlayer] == 2) return "Sports";
-        if ($this->places[$this->currentPlayer] == 6) return "Sports";
-        if ($this->places[$this->currentPlayer] == 10) return "Sports";
-        return "Rock";
+        $playerPlace = $this->places[$this->currentPlayer];
+
+        foreach ($this->categories as $category) {
+            if (in_array($playerPlace, $category->getLocations())) {
+                return $category->getName();
+            }
+        }
+
+        return null;
     }
 
     function wasCorrectlyAnswered() {
         if ($this->inPenaltyBox[$this->currentPlayer]){
             if ($this->isGettingOutOfPenaltyBox) {
                 $this->echoln("Answer was correct!!!!");
-                $this->purses[$this->currentPlayer]++;
+                $this->purses[$this->currentPlayer] += $this->categories[$this->currentCategory()]->getScore();
                 $this->echoln($this->players[$this->currentPlayer]
                     . " now has "
                     .$this->purses[$this->currentPlayer]
@@ -151,7 +133,7 @@ class Game {
         } else {
 
             $this->echoln("Answer was corrent!!!!");
-            $this->purses[$this->currentPlayer]++;
+            $this->purses[$this->currentPlayer] += $this->categories[$this->currentCategory()]->getScore();
             $this->echoln($this->players[$this->currentPlayer]
                 . " now has "
                 .$this->purses[$this->currentPlayer]
